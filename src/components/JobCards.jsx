@@ -4,8 +4,6 @@ import {
   fetchJobs,
   selectJobs,
   selectLoading,
-  filters,
-  companyName,
 } from "../redux_store/slices/jobsApiSlice";
 import {
   Grid,
@@ -22,6 +20,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import Profile1 from "../assets/profile.webp";
 import Profile2 from "../assets/profile2.webp";
+import JobDialougeBox from "./JobDialougeBox";
 
 const JobCards = () => {
   const companyNameStyle = {
@@ -156,7 +155,10 @@ const JobCards = () => {
                   {job.jobDetailsFromCompany}
                 </Typography>
               </CardContent>
-
+              <JobDialougeBox
+                jobDescription={job.jobDetailsFromCompany}
+                jdLink={job.jdLink}
+              />
               <CardActions
                 sx={{
                   display: "flex",
