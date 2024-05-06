@@ -4,6 +4,8 @@ import {
   fetchJobs,
   selectJobs,
   selectLoading,
+  filters,
+  companyName,
 } from "../redux_store/slices/jobsApiSlice";
 import {
   Grid,
@@ -65,6 +67,8 @@ const JobCards = () => {
 
   const fetchedJobs = useSelector(selectJobs);
   const isLoading = useSelector(selectLoading);
+  const selectedfilters = useSelector(filters);
+  const selectedCompany = useSelector(companyName);
 
   useEffect(() => {
     dispatch(fetchJobs({ limit: 10, offset: 0 }));
@@ -82,12 +86,83 @@ const JobCards = () => {
     }
   };
 
+  // Convert selectedfilters.location to lowercase
+  const lowerCaseLocation =
+    selectedfilters.location &&
+    selectedfilters.location.map((location) => location.toLowerCase());
+  const lowerCaseRole =
+    selectedfilters.role &&
+    selectedfilters.role.map((role) => role.toLowerCase());
+
+  const min_base_salary =
+    selectedfilters.min_base_salary &&
+    parseInt(selectedfilters.min_base_salary.slice(0, -1));
+
+  // Create a new object to store the converted filters
+  const filtersLowerCase = {
+    ...selectedfilters,
+    location: lowerCaseLocation,
+    role: lowerCaseRole,
+    min_base_salary: min_base_salary,
+  };
+
+   const filteredJobs =
+     !isLoading &&
+     fetchedJobs.jdList &&
+     fetchedJobs.jdList.filter((job) => {
+       if (Object.keys(selectedfilters).length > 0) {
+         if (
+           filtersLowerCase.min_experience !== null &&
+           job.minExp < parseInt(selectedfilters.min_experience)
+         ) {
+           return false;
+         }
+
+         if (
+           filtersLowerCase.role &&
+           filtersLowerCase.role.length > 0 &&
+           !filtersLowerCase.role.includes(job.jobRole)
+         ) {
+           return false;
+         }
+
+         if (
+           filtersLowerCase.location &&
+           filtersLowerCase.location.length > 0 &&
+           !filtersLowerCase.location.includes(job.location)
+         ) {
+           return false;
+         }
+
+         if (
+           filtersLowerCase.min_base_salary &&
+           filtersLowerCase.min_base_salary !== null &&
+           job.minJdSalary < filtersLowerCase.min_base_salary
+         ) {
+           return false;
+         }
+
+         if (
+           selectedCompany !== "" &&
+           !job.companyName
+             .toLowerCase()
+             .includes(selectedCompany.toLowerCase())
+         ) {
+           return false;
+         }
+
+         return true; // Return true for jobs that pass all filters
+       } else {
+         return true; // No filters selected, include all jobs
+       }
+     });
+
   return isLoading ? (
     <h1>API Loading</h1>
   ) : (
     <>
       <Grid container columnSpacing={10} rowSpacing={5}>
-        {fetchedJobs.jdList.map((job, index) => (
+        {filteredJobs.map((job, index) => (
           <Grid item xs={12} sm={6} lg={4} key={index}>
             <Card
               className="card-animation"
