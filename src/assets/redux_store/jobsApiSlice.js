@@ -31,6 +31,8 @@ export const fetchJobs = createAsyncThunk(
 
 const initialState = {
   jobs: [],
+  filters: {},
+  companyName: "",
   loading: true,
   error: null,
 };
@@ -38,7 +40,14 @@ const initialState = {
 const jobsApiSlice = createSlice({
   name: "jobsApi",
   initialState,
-  reducers: {},
+  reducers: {
+    selectedFilters: (state, action) => {
+      state.filters = action.payload;
+    },
+    setCompanyname: (state, action) => {
+      state.companyName = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchJobs.pending, (state) => {
       state.loading = true;
@@ -55,6 +64,9 @@ const jobsApiSlice = createSlice({
 });
 
 export default jobsApiSlice.reducer;
+export const { selectedFilters, setCompanyname } = jobsApiSlice.actions;
+export const filters = (state) => state.jobsApi.filters;
+export const companyName = (state) => state.jobsApi.companyName;
 export const selectJobs = (state) => state.jobsApi.jobs;
 export const selectLoading = (state) => state.jobsApi.loading;
 export const selectError = (state) => state.jobsApi.error;
