@@ -9,6 +9,11 @@ import {
   Typography,
   Link,
 } from "@mui/material";
+import {
+  viewJobStyle,
+  applyBtn,
+  viewJobText,
+} from "../styles/jobDialougeStyle";
 import ElectricBolt from "@mui/icons-material/ElectricBolt";
 
 const JobDialougeBox = ({ jobDescription, jdLink }) => {
@@ -22,22 +27,11 @@ const JobDialougeBox = ({ jobDescription, jdLink }) => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        position: "relative",
-        top: "-20px",
-      }}
-    >
+    <Box sx={viewJobStyle}>
       <Button
         variant="text"
         onClick={handleClickOpen}
-        sx={{
-          color: "blue",
-          letterSpacing: "2px",
-          textTransform: "none",
-        }}
+        sx={viewJobText}
       >
         View Job
       </Button>
@@ -55,14 +49,7 @@ const JobDialougeBox = ({ jobDescription, jdLink }) => {
           <Link href={jdLink} target="_blank" underline="none">
             <Button
               varinat="contained"
-              sx={{
-                p: "0.5rem 3rem",
-                display: "flex",
-                gap: "5px",
-                backgroundColor: "#55EFC4",
-                color: "black",
-                textTransform: "none",
-              }}
+              sx={applyBtn}
             >
               <ElectricBolt sx={{ color: "yellow" }} /> Easy Apply
             </Button>

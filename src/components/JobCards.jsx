@@ -23,6 +23,25 @@ import {
   CircularProgress,
   Paper,
 } from "@mui/material";
+import {
+  companyNameStyle,
+  jobRoleStyle,
+  salaryStyle,
+  jobLocationStyle,
+  cardStyle,
+  cardPaperStyle,
+  cardHeaderBox,
+  cardContentStyle,
+  cardContentText,
+  cardActionStyle,
+  experienceTextStyle,
+  easyApplyBtn,
+  refferalBtn,
+  daysStyle,
+  avatarStyle,
+  spinnerStyle,
+  matchNotFound,
+} from "../styles/jobCardStyles";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import Profile1 from "../assets/profile.webp";
@@ -31,33 +50,6 @@ import hourglass from "../assets/hourglass.svg";
 import JobDialougeBox from "./JobDialougeBox";
 
 const JobCards = () => {
-  const companyNameStyle = {
-    fontSize: "15px",
-    fontWeight: 600,
-    letterSpacing: "1px",
-    color: "#8b8b8b",
-  };
-
-  const jobRoleStyle = {
-    fontSize: "20px",
-    letterSpacing: "1px",
-  };
-
-  const jobLocationStyle = {
-    fontSize: "13px",
-    letterSpacing: "1px",
-    marginBottom: "3px",
-  };
-
-  const salaryStyle = {
-    fontSize: "15px",
-    padding: "0 20px",
-    display: "flex",
-    gap: "6px",
-    alignItem: "center",
-    color: "#89919b",
-  };
-
   const referralImages = [
     {
       name: "referal person 1",
@@ -86,7 +78,7 @@ const JobCards = () => {
   const handleImageLoad = (index) => {
     setLoadedJobs((prev) => ({ ...prev, [index]: true }));
   };
-  console.log({ offset });
+
   useEffect(() => {
     console.log("called1");
     if (hasMore) {
@@ -95,8 +87,6 @@ const JobCards = () => {
   }, [hasMore, offset, dispatch]);
 
   useEffect(() => {
-    console.log("called2");
-    console.log({ offset });
     if (!loadingRef.current) return;
 
     const loading = loadingRef.current;
@@ -116,8 +106,6 @@ const JobCards = () => {
       if (loading) loadingObserver.unobserve(loading);
     };
   }, [fetchedJobs]);
-
-  console.log({ hasMore });
 
   const handleSalaryNull = (minSalary, maxSalary) => {
     if (minSalary === null && maxSalary === null) {
@@ -203,9 +191,15 @@ const JobCards = () => {
   }, [fetchedJobs, selectedfilters, selectedCompany]);
 
   console.log({ fetchedJobs });
+  console.log({ filteredJobs });
 
   return (
     <Box>
+      {filteredJobs && filteredJobs.length === 0 && (
+        <Box sx={matchNotFound}>
+          <Typography>No match found</Typography>
+        </Box>
+      )}
       <Grid container columnSpacing={10} rowSpacing={5}>
         {filteredJobs &&
           filteredJobs.map((job, index) => (
@@ -218,36 +212,8 @@ const JobCards = () => {
               sx={loadedJobs[index] ? { opacity: 1 } : { opacity: 0 }}
               onLoad={() => handleImageLoad(index)}
             >
-              <Card
-                className="card-animation"
-                elevation={3}
-                sx={{
-                  borderRadius: "1.5rem",
-                  p: { sm: "0.5rem", xl: "1rem 2rem" },
-                  pb: {
-                    xs: "1rem",
-                    sm: "1.5rem",
-                    md: "2rem",
-                    lg: "2rem",
-                    xl: "2rem",
-                  },
-                  transition: "transform 0.3s ease",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                  },
-                }}
-              >
-                <Paper
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "7px",
-                    width: "10rem",
-                    borderRadius: "5rem",
-                    p: "0.3rem 0.85rem",
-                    my: "1rem",
-                  }}
-                >
+              <Card className="card-animation" elevation={3} sx={cardStyle}>
+                <Paper sx={cardPaperStyle}>
                   <Box>
                     <img
                       height={15}
@@ -256,21 +222,13 @@ const JobCards = () => {
                       alt="hour glass"
                     />
                   </Box>
-                  <Typography
-                    sx={{
-                      fontSize: "13px",
-                      fontWeight: 500,
-                      letterSpacing: "1px",
-                      color: "#8b8b8b",
-                    }}
-                  >
-                    Posted 10 days ago
-                  </Typography>
+                  <Typography sx={daysStyle}>Posted 10 days ago</Typography>
                 </Paper>
 
-                <Box style={{ display: "flex", padding: "20px", gap: "10px" }}>
+                <Box sx={cardHeaderBox}>
                   <img
-                    style={{ width: "35px", height: "35px" }}
+                    width={35}
+                    height={35}
                     src={job.logoUrl}
                     alt={`${job.companyName} logo`}
                   />
@@ -299,25 +257,11 @@ const JobCards = () => {
                   {handleSalaryNull(job.minJdSalary, job.maxJdSalary)}
                   <CheckBoxIcon color="success" />
                 </Typography>
-                <CardContent
-                  sx={{
-                    maxHeight: "250px",
-                    height: "100%",
-                    overflow: "hidden",
-                    maskImage:
-                      "linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255), rgba(255, 255, 255, 0))",
-                  }}
-                >
-                  <Typography
-                    style={{ fontWeight: 500, fontSize: "20px" }}
-                    varinat="h6"
-                  >
+                <CardContent sx={cardContentStyle}>
+                  <Typography sx={cardContentText} varinat="h6">
                     About Company:
                   </Typography>
-                  <Typography
-                    sx={{ fontWeight: 300, fontSize: "15px" }}
-                    varinat="body1"
-                  >
+                  <Typography sx={cardContentText} varinat="body1">
                     {job.jobDetailsFromCompany}
                   </Typography>
                 </CardContent>
@@ -325,26 +269,9 @@ const JobCards = () => {
                   jobDescription={job.jobDetailsFromCompany}
                   jdLink={job.jdLink}
                 />
-                <CardActions
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "15px",
-                    alignItems: "start",
-                    marginLeft: "0",
-                    padding: "0 18px",
-                  }}
-                >
+                <CardActions sx={cardActionStyle}>
                   <Box sx={{ margin: "15px 0" }}>
-                    <Typography
-                      sx={{
-                        textAlign: "start",
-                        color: "#8b8b8b",
-                        fontSize: "15px",
-                        fontWeight: 500,
-                        letterSpacing: "1px",
-                      }}
-                    >
+                    <Typography sx={experienceTextStyle}>
                       Minimum Experience: <br />
                       <span style={{ color: "black" }}>
                         {job.minExp === null
@@ -359,42 +286,15 @@ const JobCards = () => {
                     underline="none"
                     sx={{ width: "100%" }}
                   >
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      sx={{
-                        display: "flex",
-                        gap: "10px",
-                        backgroundColor: "#55EFC4",
-                        color: "black",
-                        textTransform: "none",
-                        "&:hover": {
-                          backgroundColor: "#55EFC4",
-                        },
-                        py: "0.75rem",
-                      }}
-                    >
+                    <Button fullWidth variant="contained" sx={easyApplyBtn}>
                       <ElectricBoltIcon style={{ color: "yellow" }} /> Easy
                       Apply
                     </Button>
                   </Link>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      marginLeft: "0",
-                      textTransform: "none",
-                      gap: "10px",
-                      py: "0.75rem",
-                    }}
-                  >
+                  <Button fullWidth variant="contained" sx={refferalBtn}>
                     {referralImages.map((referralImage, index) => (
                       <Avatar
-                        sx={{
-                          width: "30px",
-                          height: "30px",
-                          filter: "blur(1.3px)",
-                        }}
+                        sx={avatarStyle}
                         key={index}
                         alt={referralImage.name}
                         src={referralImage.img}
@@ -407,11 +307,8 @@ const JobCards = () => {
             </Grid>
           ))}
       </Grid>
-      {hasMore && (
-        <Box
-          ref={loadingRef}
-          sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
-        >
+      {hasMore && filteredJobs.length > 0 && filteredJobs && (
+        <Box ref={loadingRef} sx={spinnerStyle}>
           <CircularProgress />
         </Box>
       )}

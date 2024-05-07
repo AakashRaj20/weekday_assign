@@ -22,10 +22,11 @@ const Filters = () => {
         { group: "Engineering", name: "React Native", value: "react native" },
         { group: "Engineering", name: "Flutter", value: "flutter" },
         { group: "Engineering", name: "Tech Lead", value: "tech lead" },
-        { group: "Product", name: "Project Manager", value: "project manager" },
         { group: "Engineering", name: "QA", value: "qa" },
         { group: "Engineering", name: "Web3", value: "web3" },
         { group: "Engineering", name: "Data Science", value: "data science" },
+        { group: "Product", name: "Project Manager", value: "project manager" },
+
         {
           group: "Design",
           name: "Design Manager",
@@ -42,22 +43,22 @@ const Filters = () => {
           value: "ui/ux designer",
         },
         {
-          group: "sales",
+          group: "Sales",
           name: "Sales Manager",
           value: "sales manager",
         },
         {
-          group: "sales",
+          group: "Sales",
           name: "Sales Executive",
           value: "sales executive",
         },
         {
-          group: "operations",
+          group: "Operations",
           name: "Operations Manager",
           value: "operations manager",
         },
         {
-          group: "operations",
+          group: "Operations",
           name: "Operations Executive",
           value: "operations executive",
         },
@@ -167,32 +168,33 @@ const Filters = () => {
   console.log({ selectedValues });
 
   const handleSearchChange = (event) => {
-    dispatch(setCompanyname(event.target.value));
     setSearchvalue(event.target.value);
   };
 
-  const groupCategories = () => {
-    const options = filterTypes[0].options.map((option) => {
-      const category = option.group;
-      return {
-        category,
-        ...option,
-      };
-    });
-  };
+  useEffect(() => {
+    //debounce code
+    const debounce = setTimeout(() => {
+      dispatch(setCompanyname(searchValue));
+    },400)
+
+    //cleanup function
+    return () => clearTimeout(debounce)
+  },[searchValue])
+
   return (
     <Grid
       container
-      columns={{ xs: 14, sm: 14, md: 14, lg: 14, xl: 14 }}
+      columns={{ xs: 14, sm: 14, md: 12, lg: 14, xl: 14 }}
       spacing={2}
     >
       {filterTypes.map((each, index) => {
         return (
-          <Grid item key={index} xs={7} sm={7} md={7} lg={2}>
+          <Grid item key={index} xs={7} sm={7} md={3} lg={2}>
             <FormControl fullWidth>
               {each.type === "multiple" ? (
                 each.name === "role" ? (
                   <Autocomplete
+                    sx={{ m: 1, width: "100%" }}
                     multiple
                     id="grouped-autocomplete"
                     options={filterTypes[0].options}
@@ -249,10 +251,12 @@ const Filters = () => {
         sx={{ display: "flex", alignItems: "center" }}
         item
         xs={14}
-        md={14}
+        sm={7}
+        md={6}
         lg={2}
       >
         <TextField
+          sx={{ m: 1 }}
           label="Seacrh Company Name"
           variant="outlined"
           value={searchValue}
