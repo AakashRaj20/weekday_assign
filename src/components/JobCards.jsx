@@ -20,6 +20,7 @@ import {
   Typography,
   Link,
   Avatar,
+  CircularProgress,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
@@ -148,7 +149,7 @@ const JobCards = () => {
     min_base_salary: min_base_salary,
   };
 
-console.log({selectedfilters}, {selectedCompany});
+  console.log({ selectedfilters }, { selectedCompany });
 
   useEffect(() => {
     // Filter the fetchedJobs based on selected filters
@@ -189,22 +190,19 @@ console.log({selectedfilters}, {selectedCompany});
           }
 
           return true; // Return true for jobs that pass all filters
-        } 
+        }
 
         // Filter the fetchedJobs based on selected company
-         if (
-           !job.companyName
-             .toLowerCase()
-             .includes(selectedCompany.toLowerCase())
-         ) {
-           return false;
-         }
+        if (
+          !job.companyName.toLowerCase().includes(selectedCompany.toLowerCase())
+        ) {
+          return false;
+        }
 
         return true;
       });
     setFilteredJobs(filteredData);
   }, [fetchedJobs, selectedfilters, selectedCompany]);
-
 
   console.log({ fetchedJobs });
 
@@ -228,7 +226,7 @@ console.log({selectedfilters}, {selectedCompany});
                 sx={{
                   borderRadius: "1.5rem",
                   p: { sm: "0.5rem", xl: "1rem 2rem" },
-                  pb: { xs: "1rem", sm: "auto" },
+                  pb: { xs: "1rem", sm: "1.5rem" },
                   transition: "transform 0.3s ease",
                   "&:hover": {
                     transform: "scale(1.05)",
@@ -375,11 +373,9 @@ console.log({selectedfilters}, {selectedCompany});
           ))}
       </Grid>
       {hasMore && (
-        <div ref={loadingRef}>
-          <div className="loader">
-            <h1 className="spin"> Loading....</h1>
-          </div>
-        </div>
+        <Box ref={loadingRef} sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}>
+          <CircularProgress />
+        </Box>
       )}
     </Box>
   );
