@@ -196,7 +196,7 @@ const JobCards = () => {
 
   return (
     <Box>
-      {filteredJobs && filteredJobs.length === 0 && (
+      {!hasMore && filteredJobs && filteredJobs.length === 0 && (
         <Box sx={matchNotFound}>
           <Typography>No match found</Typography>
         </Box>

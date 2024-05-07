@@ -247,7 +247,7 @@ const Filters = () => {
         );
       })}
       <Grid
-        sx={{ display: "flex", alignItems: "center" }}
+        sx={{ display: "flex", alignItems: "start" }}
         item
         xs={12}
         sm={12}
