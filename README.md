@@ -44,21 +44,21 @@ This project is a candidate application platform that allows users to view job l
 
 ## Getting Started
 
-To run this project locally, follow these steps:
+To run this project locally, Open Terminal and follow these steps:
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   git clone https://github.com/your-username/your-repository.git](https://github.com/AakashRaj20/weekday_assign.git
    ```
    
 2. **Navigate to the project directory:**
 
- ```bash
-   cd your-repository
-```
+     ```bash
+     cd weekday_assign
+    ```
 
-4. **Install dependencies:"
+4. **Install dependencies:**
    ```bash
    npm install
    ```
