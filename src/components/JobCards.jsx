@@ -113,15 +113,15 @@ const JobCards = () => {
   }, [fetchedJobs]);
 
   //function to handle null calues for salary
-  const handleSalaryNull = (minSalary, maxSalary) => {
+  const handleSalaryNull = (minSalary, maxSalary, currency) => {
     if (minSalary === null && maxSalary === null) {
       return "Not Specified";
     } else if (minSalary === null) {
-      return `₹${maxSalary} LPA`;
+      return `${currency} ${maxSalary} LPA`;
     } else if (maxSalary === null) {
-      return `₹${minSalary} LPA`;
+      return `${currency} ${minSalary} LPA`;
     } else {
-      return `₹${minSalary} - ${maxSalary} LPA`;
+      return `${currency} ${minSalary} - ${maxSalary} LPA`;
     }
   };
 
@@ -220,7 +220,7 @@ const JobCards = () => {
           <Typography>No match found</Typography>
         </Box>
       )}
-      <Grid container columnSpacing={10} rowSpacing={5}>
+      <Grid container columnSpacing={7} rowSpacing={5}>
         {filteredJobs &&
           filteredJobs.map((job, index) => (
             <Grid
@@ -278,7 +278,11 @@ const JobCards = () => {
                 </Box>
                 <Typography style={salaryStyle}>
                   Estimated Salary:{" "}
-                  {handleSalaryNull(job.minJdSalary, job.maxJdSalary)}
+                  {handleSalaryNull(
+                    job.minJdSalary,
+                    job.maxJdSalary,
+                    job.salaryCurrencyCode
+                  )}
                   <CheckBoxIcon color="success" />
                 </Typography>
                 <CardContent sx={cardContentStyle}>

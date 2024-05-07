@@ -49,7 +49,7 @@ export const cardPaperStyle = {
   borderRadius: "5rem",
   p: "0.3rem 0.85rem",
   my: "1rem",
-  ml: "0.7rem"
+  ml: "0.7rem",
 };
 
 export const cardHeaderBox = { display: "flex", padding: "20px", gap: "10px" };
@@ -113,12 +113,16 @@ export const avatarStyle = {
   filter: "blur(1.3px)",
 };
 
-export const spinnerStyle = { display: "flex", justifyContent: "center", mt: "2rem" };
+export const spinnerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  mt: "2rem",
+};
 
 export const matchNotFound = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontWeight: 600,
-    fontSize: "20px"
-}
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontWeight: 600,
+  fontSize: "20px",
+};
