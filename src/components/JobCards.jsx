@@ -171,6 +171,25 @@ const JobCards = () => {
             return false;
           }
 
+          // Not coming from api so can be integrated later
+          // if (
+          //   filtersLowerCase.tech_stack &&
+          //   filtersLowerCase.tech_stack.length > 0 &&
+          //   !filtersLowerCase.tech_stack.includes(job.techStack)
+          // ) {
+          //   return false;
+          // }
+
+          // Not coming from API can be integrated later on
+
+          // if (
+          //   filtersLowerCase.remote &&
+          //   filtersLowerCase.remote.length > 0 &&
+          //   !filtersLowerCase.remote.includes(job.jobType)
+          // ) {
+          //   return false;
+          // }
+
           if (
             filtersLowerCase.min_base_salary &&
             filtersLowerCase.min_base_salary !== null &&
