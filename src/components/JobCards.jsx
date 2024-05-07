@@ -135,9 +135,6 @@ const JobCards = () => {
   const lowerCaseLocation =
     selectedfilters.location &&
     selectedfilters.location.map((location) => location.toLowerCase());
-  const lowerCaseRole =
-    selectedfilters.role &&
-    selectedfilters.role.map((role) => role.toLowerCase());
 
   const min_base_salary =
     selectedfilters.min_base_salary &&
@@ -147,7 +144,6 @@ const JobCards = () => {
   const filtersLowerCase = {
     ...selectedfilters,
     location: lowerCaseLocation,
-    role: lowerCaseRole,
     min_base_salary: min_base_salary,
   };
 
@@ -170,7 +166,7 @@ const JobCards = () => {
           if (
             filtersLowerCase.role &&
             filtersLowerCase.role.length > 0 &&
-            !filtersLowerCase.role.includes(job.jobRole)
+            !filtersLowerCase.role.some((each) => each.value === job.jobRole)
           ) {
             return false;
           }
@@ -228,18 +224,46 @@ const JobCards = () => {
                 sx={{
                   borderRadius: "1.5rem",
                   p: { sm: "0.5rem", xl: "1rem 2rem" },
-                  pb: { xs: "1rem", sm: "1.5rem", md: "2rem", lg: "2rem", xl: "2rem" },
+                  pb: {
+                    xs: "1rem",
+                    sm: "1.5rem",
+                    md: "2rem",
+                    lg: "2rem",
+                    xl: "2rem",
+                  },
                   transition: "transform 0.3s ease",
                   "&:hover": {
                     transform: "scale(1.05)",
                   },
                 }}
               >
-                <Paper sx={{display: "flex", alignItems: "center", gap: "7px",  width: "10rem", borderRadius: "5rem", p: "0.3rem 0.85rem", my: "1rem"}}>
+                <Paper
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "7px",
+                    width: "10rem",
+                    borderRadius: "5rem",
+                    p: "0.3rem 0.85rem",
+                    my: "1rem",
+                  }}
+                >
                   <Box>
-                    <img height={15} width={15} src={hourglass} alt="hour glass" />
+                    <img
+                      height={15}
+                      width={15}
+                      src={hourglass}
+                      alt="hour glass"
+                    />
                   </Box>
-                  <Typography sx={{fontSize: "13px", fontWeight: 500, letterSpacing: "1px", color: "#8b8b8b"}}>
+                  <Typography
+                    sx={{
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      letterSpacing: "1px",
+                      color: "#8b8b8b",
+                    }}
+                  >
                     Posted 10 days ago
                   </Typography>
                 </Paper>

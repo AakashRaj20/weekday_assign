@@ -13,20 +13,54 @@ const Filters = () => {
       type: "multiple",
       label: "Roles",
       options: [
-        { name: "Frontend", value: "frontend" },
-        { name: "Backend", value: "backend" },
-        { name: "Fullstack", value: "fullstack" },
-        { name: "Devops", value: "devops" },
-        { name: "IOS", value: "ios" },
-        { name: "Android", value: "android" },
-        { name: "React Native", value: "react native" },
-        { name: "Flutter", value: "flutter" },
-        { name: "Tech Lead", value: "tech lead" },
-        { name: "Project Manager", value: "project manager" },
-        { name: "QA", value: "qa" },
-        { name: "Web3", value: "web3" },
-        { name: "Data Science", value: "data science" },
-        { name: "Machine Learning", value: "machine learning" },
+        { group: "Engineering", name: "Frontend", value: "frontend" },
+        { group: "Engineering", name: "Backend", value: "backend" },
+        { group: "Engineering", name: "Fullstack", value: "fullstack" },
+        { group: "Engineering", name: "Devops", value: "devops" },
+        { group: "Engineering", name: "IOS", value: "ios" },
+        { group: "Engineering", name: "Android", value: "android" },
+        { group: "Engineering", name: "React Native", value: "react native" },
+        { group: "Engineering", name: "Flutter", value: "flutter" },
+        { group: "Engineering", name: "Tech Lead", value: "tech lead" },
+        { group: "Product", name: "Project Manager", value: "project manager" },
+        { group: "Engineering", name: "QA", value: "qa" },
+        { group: "Engineering", name: "Web3", value: "web3" },
+        { group: "Engineering", name: "Data Science", value: "data science" },
+        {
+          group: "Design",
+          name: "Design Manager",
+          value: "design manager",
+        },
+        {
+          group: "Design",
+          name: "Graphic Designer",
+          value: "graphic designer",
+        },
+        {
+          group: "Design",
+          name: "UI/UX Designer",
+          value: "ui/ux designer",
+        },
+        {
+          group: "sales",
+          name: "Sales Manager",
+          value: "sales manager",
+        },
+        {
+          group: "sales",
+          name: "Sales Executive",
+          value: "sales executive",
+        },
+        {
+          group: "operations",
+          name: "Operations Manager",
+          value: "operations manager",
+        },
+        {
+          group: "operations",
+          name: "Operations Executive",
+          value: "operations executive",
+        },
       ],
     },
     {
@@ -137,6 +171,15 @@ const Filters = () => {
     setSearchvalue(event.target.value);
   };
 
+  const groupCategories = () => {
+    const options = filterTypes[0].options.map((option) => {
+      const category = option.group;
+      return {
+        category,
+        ...option,
+      };
+    });
+  };
   return (
     <Grid
       container
@@ -148,22 +191,39 @@ const Filters = () => {
           <Grid item key={index} xs={7} sm={7} md={7} lg={2}>
             <FormControl fullWidth>
               {each.type === "multiple" ? (
-                <Autocomplete
-                  sx={{ m: 1, width: "100%" }}
-                  multiple
-                  options={each.options.map((option) => option.name)}
-                  value={selectedValues[each.name] || []}
-                  onChange={(e, newValue) =>
-                    handleChange({ target: { value: newValue } }, each.name)
-                  }
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label={each.label}
-                    />
-                  )}
-                />
+                each.name === "role" ? (
+                  <Autocomplete
+                    multiple
+                    id="grouped-autocomplete"
+                    options={filterTypes[0].options}
+                    groupBy={(option) => option.group}
+                    getOptionLabel={(option) => option.name}
+                    value={selectedValues[each.name] || []}
+                    onChange={(e, newValue) =>
+                      handleChange({ target: { value: newValue } }, each.name)
+                    }
+                    renderInput={(params) => (
+                      <TextField {...params} label="Roles" />
+                    )}
+                  />
+                ) : (
+                  <Autocomplete
+                    sx={{ m: 1, width: "100%" }}
+                    multiple
+                    options={each.options.map((option) => option.name)}
+                    value={selectedValues[each.name] || []}
+                    onChange={(e, newValue) =>
+                      handleChange({ target: { value: newValue } }, each.name)
+                    }
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label={each.label}
+                      />
+                    )}
+                  />
+                )
               ) : (
                 <Autocomplete
                   sx={{ m: 1, width: "100%" }}
