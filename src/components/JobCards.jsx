@@ -21,11 +21,13 @@ import {
   Link,
   Avatar,
   CircularProgress,
+  Paper,
 } from "@mui/material";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import Profile1 from "../assets/profile.webp";
 import Profile2 from "../assets/profile2.webp";
+import hourglass from "../assets/hourglass.svg";
 import JobDialougeBox from "./JobDialougeBox";
 
 const JobCards = () => {
@@ -226,13 +228,22 @@ const JobCards = () => {
                 sx={{
                   borderRadius: "1.5rem",
                   p: { sm: "0.5rem", xl: "1rem 2rem" },
-                  pb: { xs: "1rem", sm: "1.5rem" },
+                  pb: { xs: "1rem", sm: "1.5rem", md: "2rem", lg: "2rem", xl: "2rem" },
                   transition: "transform 0.3s ease",
                   "&:hover": {
                     transform: "scale(1.05)",
                   },
                 }}
               >
+                <Paper sx={{display: "flex", alignItems: "center", gap: "7px",  width: "10rem", borderRadius: "5rem", p: "0.3rem 0.85rem", my: "1rem"}}>
+                  <Box>
+                    <img height={15} width={15} src={hourglass} alt="hour glass" />
+                  </Box>
+                  <Typography sx={{fontSize: "13px", fontWeight: 500, letterSpacing: "1px", color: "#8b8b8b"}}>
+                    Posted 10 days ago
+                  </Typography>
+                </Paper>
+
                 <Box style={{ display: "flex", padding: "20px", gap: "10px" }}>
                   <img
                     style={{ width: "35px", height: "35px" }}
@@ -373,7 +384,10 @@ const JobCards = () => {
           ))}
       </Grid>
       {hasMore && (
-        <Box ref={loadingRef} sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}>
+        <Box
+          ref={loadingRef}
+          sx={{ display: "flex", justifyContent: "center", mt: "2rem" }}
+        >
           <CircularProgress />
         </Box>
       )}
