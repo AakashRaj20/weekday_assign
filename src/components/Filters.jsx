@@ -7,6 +7,7 @@ import {
 } from "../redux_store/slices/jobsApiSlice";
 
 const Filters = () => {
+  //Filter Categories data
   const filterTypes = [
     {
       name: "role",
@@ -157,16 +158,14 @@ const Filters = () => {
     }));
   };
 
-  console.log({ selectedValues });
-
   const dispatch = useDispatch();
 
+  //setting filters to redux store
   useEffect(() => {
     dispatch(selectedFilters(selectedValues));
   }, [selectedValues]);
 
-  console.log({ selectedValues });
-
+  //function to handle company search
   const handleSearchChange = (event) => {
     setSearchvalue(event.target.value);
   };
@@ -184,12 +183,12 @@ const Filters = () => {
   return (
     <Grid
       container
-      columns={{ xs: 14, sm: 14, md: 12, lg: 14, xl: 14 }}
+      columns={{ xs: 12, sm: 12, md: 12, lg: 14, xl: 14 }}
       spacing={2}
     >
       {filterTypes.map((each, index) => {
         return (
-          <Grid item key={index} xs={7} sm={7} md={3} lg={2}>
+          <Grid item key={index} xs={6} sm={6} md={3} lg={2}>
             <FormControl fullWidth>
               {each.type === "multiple" ? (
                 each.name === "role" ? (
@@ -250,8 +249,8 @@ const Filters = () => {
       <Grid
         sx={{ display: "flex", alignItems: "center" }}
         item
-        xs={14}
-        sm={7}
+        xs={12}
+        sm={12}
         md={6}
         lg={2}
       >

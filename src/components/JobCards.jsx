@@ -50,6 +50,7 @@ import hourglass from "../assets/hourglass.svg";
 import JobDialougeBox from "./JobDialougeBox";
 
 const JobCards = () => {
+  // referall button static images
   const referralImages = [
     {
       name: "referal person 1",
@@ -71,21 +72,25 @@ const JobCards = () => {
   const selectedfilters = useSelector(filters);
   const selectedCompany = useSelector(companyName);
 
+  // ref for intersection observer
   const loadingRef = useRef(null);
 
   const [loadedJobs, setLoadedJobs] = useState({});
   const [filteredJobs, setFilteredJobs] = useState([]);
+
+  //function to add smooth animation to new data coming from api.
   const handleImageLoad = (index) => {
     setLoadedJobs((prev) => ({ ...prev, [index]: true }));
   };
 
+  // hook to call the api
   useEffect(() => {
-    console.log("called1");
     if (hasMore) {
       dispatch(fetchJobs({ offset: offset, limit: 10 }));
     }
   }, [hasMore, offset, dispatch]);
 
+  // intersection observer for infinte scrolling
   useEffect(() => {
     if (!loadingRef.current) return;
 
@@ -107,6 +112,7 @@ const JobCards = () => {
     };
   }, [fetchedJobs]);
 
+  //function to handle null calues for salary
   const handleSalaryNull = (minSalary, maxSalary) => {
     if (minSalary === null && maxSalary === null) {
       return "Not Specified";
@@ -134,8 +140,6 @@ const JobCards = () => {
     location: lowerCaseLocation,
     min_base_salary: min_base_salary,
   };
-
-  console.log({ selectedfilters }, { selectedCompany });
 
   useEffect(() => {
     // Filter the fetchedJobs based on selected filters
@@ -175,7 +179,7 @@ const JobCards = () => {
             return false;
           }
 
-          return true; // Return true for jobs that pass all filters
+          return true;
         }
 
         // Filter the fetchedJobs based on selected company
@@ -189,9 +193,6 @@ const JobCards = () => {
       });
     setFilteredJobs(filteredData);
   }, [fetchedJobs, selectedfilters, selectedCompany]);
-
-  console.log({ fetchedJobs });
-  console.log({ filteredJobs });
 
   return (
     <Box>
@@ -209,7 +210,11 @@ const JobCards = () => {
               sm={6}
               lg={4}
               key={index}
-              sx={loadedJobs[index] ? { opacity: 1 } : { opacity: 0 }}
+              sx={
+                loadedJobs[index]
+                  ? { transition: "opacity 0.3s ease-in-out" }
+                  : { opacity: 0 }
+              }
               onLoad={() => handleImageLoad(index)}
             >
               <Card className="card-animation" elevation={3} sx={cardStyle}>
@@ -307,7 +312,7 @@ const JobCards = () => {
             </Grid>
           ))}
       </Grid>
-      {hasMore && filteredJobs.length > 0 && filteredJobs && (
+      {hasMore && (
         <Box ref={loadingRef} sx={spinnerStyle}>
           <CircularProgress />
         </Box>

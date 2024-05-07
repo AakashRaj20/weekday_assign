@@ -19,6 +19,8 @@ import ElectricBolt from "@mui/icons-material/ElectricBolt";
 const JobDialougeBox = ({ jobDescription, jdLink }) => {
   const [open, setOpen] = useState(false);
 
+  //function to handle open and close state of dialouge box
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,11 +30,7 @@ const JobDialougeBox = ({ jobDescription, jdLink }) => {
 
   return (
     <Box sx={viewJobStyle}>
-      <Button
-        variant="text"
-        onClick={handleClickOpen}
-        sx={viewJobText}
-      >
+      <Button variant="text" onClick={handleClickOpen} sx={viewJobText}>
         View Job
       </Button>
       <Dialog
@@ -47,10 +45,7 @@ const JobDialougeBox = ({ jobDescription, jdLink }) => {
         </DialogContent>
         <DialogActions>
           <Link href={jdLink} target="_blank" underline="none">
-            <Button
-              varinat="contained"
-              sx={applyBtn}
-            >
+            <Button varinat="contained" sx={applyBtn}>
               <ElectricBolt sx={{ color: "yellow" }} /> Easy Apply
             </Button>
           </Link>

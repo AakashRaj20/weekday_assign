@@ -8,15 +8,6 @@ const initialState = {
   error: "",
 };
 
-// export const fetchImage = createAsyncThunk("image/fetch", async (data) => {
-//   const response = await axios.get(
-//     `https://dummyjson.com/products?limit=${data.limit}&skip=${
-//       (data.page - 1) * data.limit
-//     }`
-//   );
-//   return response.data;
-// });
-
 export const fetchJobs = createAsyncThunk(
   "jobs/fetchJobs",
   async ({ limit, offset }) => {
