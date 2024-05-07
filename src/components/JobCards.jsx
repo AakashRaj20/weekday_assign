@@ -188,18 +188,19 @@ console.log({selectedfilters}, {selectedCompany});
             return false;
           }
 
-          if (
-            !job.companyName
-              .toLowerCase()
-              .includes(selectedCompany.toLowerCase())
-          ) {
-            return false;
-          }
-
           return true; // Return true for jobs that pass all filters
-        } else {
-          return true; // No filters selected, include all jobs
-        }
+        } 
+
+        // Filter the fetchedJobs based on selected company
+         if (
+           !job.companyName
+             .toLowerCase()
+             .includes(selectedCompany.toLowerCase())
+         ) {
+           return false;
+         }
+
+        return true;
       });
     setFilteredJobs(filteredData);
   }, [fetchedJobs, selectedfilters, selectedCompany]);
